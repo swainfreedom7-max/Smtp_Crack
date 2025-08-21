@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>SMTP Configuration <span class="gradient-text">Detector</span></h1>
+            <p class="hero-description">Extract working SMTP settings from email credentials with enterprise-grade accuracy</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Automatic</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Entries</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Reliable</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="upload-card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h2>Upload Your Email List</h2>
+                <p>Get started in seconds</p>
+            </div>
+            
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="file-drop-zone" id="fileDropZone">
+                    <input type="file" name="file" id="fileInput" accept=".txt" required>
+                    <div class="drop-content">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Drag & Drop your file</h3>
+                        <p>or click to browse</p>
+                        <span class="file-types">TXT files only</span>
+                    </div>
+                    <div class="file-preview" id="filePreview"></div>
+                </div>
+                
+                <button type="submit" class="process-btn">
+                    <span class="btn-icon">
+                        <i class="fas fa-bolt"></i>
+                    </span>
+                    <span class="btn-text">Process Configurations</span>
+                </button>
+            </form>
+            
+            <div class="card-footer">
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-shield-check"></i>
+                        <span>Secure & Encrypted</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Fast Processing</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-download"></i>
+                        <span>CSV Export</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-section">
+    <div class="container">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Upload File</h3>
+                    <p>Upload a text file with email:password format</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Automatic Detection</h3>
+                    <p>System tests multiple SMTP configurations</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Get Results</h3>
+                    <p>Download working SMTP settings instantly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

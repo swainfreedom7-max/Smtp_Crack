@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-header">
+        <h2><i class="fas fa-check-circle"></i> Processing Complete</h2>
+        <div class="results-stats">
+            <div class="stat-box success">
+                <div class="stat-number">{{ valid_count }}</div>
+                <div class="stat-label">Valid Configurations</div>
+            </div>
+            <div class="stat-box danger">
+                <div class="stat-number">{{ invalid_count }}</div>
+                <div class="stat-label">Invalid Entries</div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="{{ url_for('download') }}" class="btn-download">
+                <i class="fas fa-download"></i> Download CSV
+            </a>
+            <a href="{{ url_for('index') }}" class="btn-secondary">
+                <i class="fas fa-upload"></i> Upload Another
+            </a>
+        </div>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>SMTP Host</th>
+                    <th>Port</th>
+                    <th>Encryption</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr class="{{ 'valid' if result.valid else 'invalid' }}">
+                    <td>{{ result.email }}</td>
+                    <td>
+                        <span class="status-badge {{ 'success' if result.valid else 'error' }}">
+                            {{ "VALID" if result.valid else "INVALID" }}
+                        </span>
+                    </td>
+                    <td>{{ result.host if result.valid else "N/A" }}</td>
+                    <td>{{ result.port if result.valid else "N/A" }}</td>
+                    <td>{{ result.encryption.upper() if result.valid else "N/A" }}</td>
+                    <td class="password-cell">
+                        <span class="password">{{ result.password if result.valid else "N/A" }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

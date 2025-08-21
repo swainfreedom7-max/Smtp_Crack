@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMTP Detect Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="light-mode">
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>SMTP Detect Pro</h1>
+                    <p class="tagline">Enterprise SMTP Configuration Tool</p>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p class="copyright">&copy; 2023 SMTP Detect Pro. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#privacy"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    <a href="#terms"><i class="fas fa-file-contract"></i> Terms</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Processing your request...</p>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
