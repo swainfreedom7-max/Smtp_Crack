@@ -3,6 +3,7 @@ from smtp_checker import process_email_list
 from config import Config
 import io
 import csv
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -66,4 +67,5 @@ def download():
     )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port, debug=False)
