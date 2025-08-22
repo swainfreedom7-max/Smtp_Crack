@@ -3,6 +3,7 @@ import dns.resolver
 import socket
 from typing import List, Dict
 from config import Config
+import time
 
 def get_smtp_hosts(domain: str) -> List[str]:
     """Generate potential SMTP hosts for a domain"""
@@ -30,10 +31,10 @@ def test_smtp_connection(host: str, port: int, encryption: str) -> bool:
     """Test if host:port accepts SMTP connections"""
     try:
         if encryption == 'ssl':
-            with smtplib.SMTP_SSL(host, port, timeout=Config.TIMEOUT) as server:
+            with smtplib.SMTP_SSL(host, port, timeout=5) as server:  # Reduced timeout
                 return True
         else:
-            with smtplib.SMTP(host, port, timeout=Config.TIMEOUT) as server:
+            with smtplib.SMTP(host, port, timeout=5) as server:  # Reduced timeout
                 if encryption == 'starttls':
                     server.starttls()
                 return True
@@ -44,11 +45,11 @@ def authenticate_smtp(host: str, port: int, email: str, password: str, encryptio
     """Perform actual SMTP authentication"""
     try:
         if encryption == 'ssl':
-            with smtplib.SMTP_SSL(host, port, timeout=Config.TIMEOUT) as server:
+            with smtplib.SMTP_SSL(host, port, timeout=10) as server:
                 server.login(email, password)
                 return True
         else:
-            with smtplib.SMTP(host, port, timeout=Config.TIMEOUT) as server:
+            with smtplib.SMTP(host, port, timeout=10) as server:
                 if encryption == 'starttls':
                     server.starttls()
                 server.login(email, password)
@@ -83,6 +84,9 @@ def detect_smtp_config(email: str, password: str) -> Dict:
                         'encryption': encryption,
                         'valid': True
                     }
+                # Small delay to avoid rate limiting
+                time.sleep(0.1)
+    
     return {
         'email': email,
         'password': password,

@@ -4,13 +4,22 @@ from config import Config
 import io
 import csv
 import os
+import threading
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+# Global variable to track processing status
+processing = False
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    global processing
+    
     if request.method == 'POST':
+        if processing:
+            return "Another file is currently processing. Please wait.", 429
+            
         if 'file' not in request.files:
             return redirect(request.url)
         
@@ -19,10 +28,19 @@ def index():
             return redirect(request.url)
             
         if file and file.filename.endswith('.txt'):
-            emails = file.read().decode('utf-8').splitlines()
-            results = process_email_list(emails[:app.config['MAX_ENTRIES']])
-            session['results'] = results
-            return redirect(url_for('results'))
+            processing = True
+            try:
+                emails = file.read().decode('utf-8').splitlines()
+                # Process in a thread to avoid timeout
+                results = process_email_list(emails[:app.config['MAX_ENTRIES']])
+                session['results'] = results
+                processing = False
+                return redirect(url_for('results'))
+            except Exception as e:
+                processing = False
+                return f"Error processing file: {str(e)}", 500
+            finally:
+                processing = False
     
     return render_template('index.html')
 
@@ -68,4 +86,4 @@ def download():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
